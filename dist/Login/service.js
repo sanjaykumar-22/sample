@@ -8,15 +8,15 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const env_1 = __importDefault(require("../config/env"));
 const validation_1 = require("./validation");
 const generateAccessToken = (user) => {
-    return jsonwebtoken_1.default.sign({ userId: user.id, username: user.username, roles: user.roles }, env_1.default.jwtAccessTokenSecret, { expiresIn: '15m' });
+    return jsonwebtoken_1.default.sign({ userId: user.userid, roles: user.roles }, env_1.default.jwtAccessTokenSecret, { expiresIn: '15m' });
 };
 exports.generateAccessToken = generateAccessToken;
 const generateRefreshToken = (user) => {
-    return jsonwebtoken_1.default.sign({ userId: user.id, username: user.username }, env_1.default.jwtRefreshTokenSecret, { expiresIn: '7d' });
+    return jsonwebtoken_1.default.sign({ userId: user.userid }, env_1.default.jwtRefreshTokenSecret, { expiresIn: '7d' });
 };
 exports.generateRefreshToken = generateRefreshToken;
-const loginService = (username, password) => {
-    const user = (0, validation_1.validateUser)(username, password);
+const loginService = (userid, password, phoneNumber) => {
+    const user = (0, validation_1.validateUser)(userid, password, phoneNumber);
     if (!user)
         throw new Error('Invalid credentials');
     const accessToken = (0, exports.generateAccessToken)(user);

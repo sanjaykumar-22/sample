@@ -4,8 +4,8 @@ exports.loginController = void 0;
 const service_1 = require("./service");
 const loginController = (req, res) => {
     try {
-        const { username, password } = req.body;
-        const tokens = (0, service_1.loginService)(username, password);
+        const { userid, password, phoneNumber } = req.body;
+        const tokens = (0, service_1.loginService)(userid, password, phoneNumber);
         res.json(tokens);
     }
     catch (error) {
